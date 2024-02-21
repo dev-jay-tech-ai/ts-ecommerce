@@ -1,0 +1,52 @@
+import { Product } from "./types/Product";
+
+export const sampleProducts:Product[] = [
+  {
+    name: 'Nike Slim Shirts 1',
+    slug: 'nike-slim-shirts1',
+    category: 'Shirts',
+    image: '../images/p1.jpg',
+    brand: 'Nike',
+    price: 120,
+    countInStock: 10,
+    description: 'high quality shirts',
+    rating: 4.5,
+    numReviews: 10,
+  },
+  {
+    name: 'Nike Slim Shirts 2',
+    slug: 'nike-slim-shirts2',
+    category: 'Shirts',
+    image: '../images/p2.jpg',
+    brand: 'Nike',
+    price: 120,
+    countInStock: 10,
+    description: 'high quality shirts',
+    rating: 4.5,
+    numReviews: 10,
+  },
+  {
+    name: 'Nike Slim Shirts 3',
+    slug: 'nike-slim-shirts3',
+    category: 'Shirts',
+    image: '../images/p3.jpg',
+    brand: 'Nike',
+    price: 120,
+    countInStock: 10,
+    description: 'high quality shirts',
+    rating: 4.5,
+    numReviews: 10,
+  },
+  {
+    name: 'Nike Slim Shirts 4',
+    slug: 'nike-slim-shirts4',
+    category: 'Shirts',
+    image: '../images/p4.jpg',
+    brand: 'Nike',
+    price: 120,
+    countInStock: 10,
+    description: 'high quality shirts',
+    rating: 4.5,
+    numReviews: 10,
+  }      
+]
