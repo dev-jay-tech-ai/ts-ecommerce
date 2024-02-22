@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Store } from './Store'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const { state: { mode, cart }, dispatch } = useContext(Store)
