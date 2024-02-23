@@ -7,10 +7,6 @@ import ProductItem from '../components/ProductItem'
 import { Helmet } from 'react-helmet-async'
 import { useGetProductsQuery } from '../hooks/productHooks'
 
-
-
-
-
 export default function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery();
   return isLoading ? (
