@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "../Store";
 import { useContext, useEffect, useState } from "react";
-import { useSigninMutation } from "../hooks/userHooks";
+import { useSigninMutation, useSignupMutation } from "../hooks/userHooks";
 import { ApiError } from "../types/ApiError";
 import { getError } from "../utils";
 import { toast } from "react-toastify";
@@ -15,23 +15,30 @@ export default function SigninPage() {
   const redirectInUrl = new URLSearchParams(search).get('redirect')
   const redirect = redirectInUrl ? redirectInUrl : '/'
 
+  const [ name, setName ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ confirmPassword, setConfirmPassword ] = useState('')
 
   const { state, dispatch } = useContext(Store)
   const { userInfo } = state
 
-  const { mutateAsync: signin, isLoading } = useSigninMutation()
+  const { mutateAsync: signup, isLoading } = useSignupMutation()
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
+    if(password !== confirmPassword) {
+      toast.error('Password do not match')
+      return
+    }
     try {
-      const data = await signin({
+      const data = await signup({
+        name,
         email,
         password
       })
-      dispatch({ type: 'USER_SIGNIN', payload: data })
+      dispatch({ type: 'USER_SIGNUP', payload: data })
       localStorage.setItem('userInfo', JSON.stringify(data))
-      navigate(redirect ||  '/')
+      navigate(redirect)
     } catch(err) {
       toast.error(getError(err as ApiError))
     }
@@ -44,10 +51,17 @@ export default function SigninPage() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign In</title>
+        <title>Sign Up</title>
       </Helmet>
-      <h1 className="my-3">Sign In</h1>
+      <h1 className="my-3">Sign Up</h1>
       <Form onSubmit={submitHandler}>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -64,13 +78,21 @@ export default function SigninPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Form.Group>
         <div className="mb-3">
-          <Button disabled={isLoading} type="submit">Sign In</Button>
+          <Button disabled={isLoading} type="submit">Sign Up</Button>
           {isLoading && <LoadingBox />}
         </div>
         <div className="mb-3">
-          New customer?{' '}
-          <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
+          Already have an account?{' '}
+          <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
         </div>
       </Form>
     </Container>
